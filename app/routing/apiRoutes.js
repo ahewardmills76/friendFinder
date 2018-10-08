@@ -1,10 +1,10 @@
 // ===============================================================================
-// DEPENDENCIES
-// We need to include the path package to get the correct file path for our html
+// LOAD DATA
+// We are linking our routes to a series of "data" sources.
+// These data sources hold arrays of information on table-data, waitinglist, etc.
 // ===============================================================================
-var path = require("path");
-var friends = require('../api/friends');
-var bodyParser = require('body-parser');
+var friendsData = require('../data/friends');
+
 
 
 
@@ -19,13 +19,13 @@ module.exports = function (app) {
   // Below code handles when users "visit" a page.
   // In each of the below cases the user is shown an HTML page of content
   // ---------------------------------------------------------------------------
-  app.get(friends, function(req, res) {
-    return res.json(characters);
+  app.get("/api/friends", function(req, res) {
+    return res.json(friendsData);
   });
 
-  app.post("/addFriend", function (req, res) {
+  app.post("/api/friends", function (req, res) {
     console.log(req.body);
-    friends.push(req.body);
+    friendsData.push(req.body);
     // compare friends  functions
     var scores = [] // sums to 100
     var sum = 0;
