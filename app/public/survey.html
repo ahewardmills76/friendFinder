@@ -156,38 +156,25 @@
    
 
   </div>
-  <script>
-    $(document).ready(function(){
-      $('#submit').on('click', function(){
-        var surveyResults = {
-          name : $('#name').val(),
-          photo : $('#photo').val(),
-          scores : [
-          $('#q1').val(),  
-          $('#q2').val(),
-          $('#q3').val(),
-          $('#q4').val(),
-          $('#q5').val(),
-          $('#q6').val(),
-          $('#q7').val(),
-          $('#q8').val(),
-          $('#q9').val(),
-          $('#q10').val()
-          ]
-          
-          
-        }
-        console.log(surveyResults);
-        
-            $.post("/addFriend", surveyResults, function(data, status){
-                  alert("Data: " + data + "\nStatus: " + status);
-
-                  /// the friend match
+  <script type="text/javascript">
+    $("#submit").on("click", function() {
+        event.preventDefault();
+        var newFriend = {
+            name: $("#name").val().trim(),
+            photo: $("#photo").val().trim(),
+            scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val() ]
+        };
+        alert("Searching for your match...");
+        $.post("/api/friends", newFriend)
+            .done(function(data) {
+                console.log(data);
+                $('#caption').text(data.name);
+                $('#imagepreview').attr('src', data.photo);
+                $('#imagemodal').modal('show');
             });
-
-       });
-     
+        $("#name").val("");
+        $("#photo").val("");
+        [$("#q1").val(""), $("#q2").val(""), $("#q3").val(""), $("#q4").val(""), $("#q5").val(""), $("#q6").val(""), $("#q7").val(""), $("#q8").val(""), $("#q9").val(""), $("#q10").val("") ]
     });
-  
-  </script>
+</script>
   </body>
